@@ -31,10 +31,12 @@ public class Four {
 			}
 			tlds.put(tld, ++count);
 		}
+		// FileOutputStream fos = new FileOutputStream("tlds.txt");
 		for (Map.Entry<String, Integer> entry : tlds.entrySet()) {
 			// TODO file output to tlds.txt
 			// System.out.println(entry.getKey() + ":" + entry.getValue());
 		}
+		// fos.close();
 
 		Map<String, Integer> scores = new HashMap<>();
 		for (String line : lines) {
