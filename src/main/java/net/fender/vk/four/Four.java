@@ -17,6 +17,7 @@ public class Four {
 
 	public static void main(String[] args) throws Exception {
 		List<String> lines = Files.readAllLines(Paths.get("src/main/resources/domains.txt"));
+
 		SortedMap<String, Integer> tlds = new TreeMap<>();
 		for (String line : lines) {
 			if (IPv4.matcher(line).lookingAt()) {
@@ -34,25 +35,23 @@ public class Four {
 			// TODO file output to tlds.txt
 			// System.out.println(entry.getKey() + ":" + entry.getValue());
 		}
-		tlds.entrySet().stream().sorted((entry1, entry2) -> {
-			int compare = entry1.getValue().compareTo(entry2.getValue());
-			return compare != 0 ? compare : entry1.getKey().compareTo(entry2.getKey());
-		});
+
 		Map<String, Integer> scores = new HashMap<>();
 		for (String line : lines) {
 			int sum = 0;
 			String lower = line.toLowerCase();
-			int position = 1;
+			int position = 0;
 			for (byte c : lower.getBytes()) {
+				position++;
 				if (!Character.isAlphabetic(c)) {
 					continue;
 				}
-				sum = (c - 97) * position;
-				position++;
+				sum += (c - 96) * position;
 			}
 			scores.put(lower, sum);
 		}
-		tlds.entrySet().stream().sorted((entry1, entry2) -> {
+		// TODO output to file
+		scores.entrySet().stream().sorted((entry1, entry2) -> {
 			int compare = entry1.getValue().compareTo(entry2.getValue());
 			return compare != 0 ? compare : entry1.getKey().compareTo(entry2.getKey());
 		}).forEach(System.out::println);
